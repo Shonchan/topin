@@ -13,16 +13,34 @@ class PostView extends Controller
 
         $cat = Category::where('url', '=', $url)->first();
         if (isset($cat)) {
-            $posts = Post::where('category_id', '=', $cat->id)
+            $posts = Post::latest()->where('category_id', '=', $cat->id)
                 ->where('published', '=', 1)->paginate(10);
             return view( 'posts.category', compact( 'cat', 'posts' ) );
         }
         else return redirect('/');
     }
 
-    public function show($cat_url, $url){
-
+    public function show($cat_url, $url)
+    {
         $post = Post::where('url', '=', $url)->first();
+
+        if ($browsed_posts = \Cookie::get('browsed_posts')) {
+
+            if(array_key_exists($post->id, $browsed_posts) == false){
+                $browsed_posts[$post->id] = $post->id;
+                $post->browsed++;
+                $post->save();
+            }
+        } else {
+            $browsed_posts = [$post->id => $post->id];
+            $post->browsed++;
+            $post->save();
+        }
+
+        \Cookie::queue('browsed_posts', $browsed_posts, 60*24*30);
+
+
+
 
         return view('posts.show', compact('post'));
     }
@@ -35,8 +53,8 @@ class PostView extends Controller
     }
 
     public function searchRedirect(Request $request){
-        if($request->has('keyword')){
-            return redirect()->route('search', $request->keyword);
+        if($request->has('search')){
+            return redirect()->route('search', $request->search);
         }
         return redirect()->back();
     }

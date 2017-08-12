@@ -4,7 +4,10 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class AdminAuth
+
+
+
+class MaintenanceMode
 {
     /**
      * Handle an incoming request.
@@ -13,17 +16,15 @@ class AdminAuth
      * @param  \Closure  $next
      * @return mixed
      */
+
+
     public function handle($request, Closure $next)
     {
 
-        if(\Auth::check()){
-            $user = \Auth::user();
-
-            if($user->role == 'admin') {
-                return $next( $request );
-            }
-            return redirect('/');
+        if(\Auth::check() && $request->user()->role == 'admin'){
+            return $next( $request );
         }
-        return redirect('login');
+
+        return response('');
     }
 }

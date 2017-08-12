@@ -1,35 +1,52 @@
-<nav class="navbar navbar-inverse">
-    <div class="container">
-        <div class="navbar-header">
-            {{--<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>--}}
-            <a class="navbar-brand" href="/">TOPin</a>
+<header>
+    <div class="content">
+        <div class="top">
+            <div class="logo">
+                <div class="mobile_menu">
+                    <a href="#" class="mobile_button"><span></span></a>
+                    <ul>
+                        @if (count($cats)>0)
+                            @foreach ($cats as $cat)
+                                <li><a href="{{ url($cat->url) }}">{{ $cat->name }}</a></li>
+                                @if (count($cat->childs) > 0)
+                                    @foreach ($cat->childs as $child)
+                                        <li><a href="{{ url($child->url) }}">{{ $child->name }}</a></li>
+                                    @endforeach
+                                @endif
+                            @endforeach
+                        @endif
+
+                    </ul>
+                </div>
+                <a href=" {{ url('/') }}"><img src="{{ url('images/logo.png') }}" alt="" /></a>
+                <div class="menu">
+                    <ul>@if (count($cats)>0)
+                            @foreach ($cats as $cat)
+                                <li><a href="{{ url($cat->url) }}">{{ $cat->name }}</a></li>
+                                @if (count($cat->childs) > 0)
+                                    @foreach ($cat->childs as $child)
+                                        <li><a href="{{ url($child->url) }}">{{ $child->name }}</a></li>
+                                    @endforeach
+                                @endif
+                            @endforeach
+                        @endif
+                    </ul>
+                </div>
+            </div>
+            <div class="search icon-search">
+                {!! Form::open(['route' => 'search.redirect', 'method' => 'post']) !!}
+                    {!! Form::text('search', null, ['placeholder' => 'Как выбрать..']) !!}
+                {!! Form::close() !!}
+            </div>
+            <!--div class="login">
+                <a href="#" class="icon-user"></a>
+            </div-->
         </div>
-        <div id="navbar" class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-                <li class="active"><a href="/">Home</a></li>
-                @foreach($cats as $cat)
-                    @if (count($cat->childs) > 0)
-                        <li class="dropdown">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="{{ url($cat->url) }}">{{$cat->name}}<span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                @foreach ($cat->childs as  $child)
-                                    <li><a href="{{ url($child->url) }}">{{$child->name}}</a></li>
-                                @endforeach
-                            </ul>
-                        </li>
-                    @else
-                        <li><a href="{{ url($cat->url) }}">{{$cat->name}}</a></li>
-                    @endif
-                @endforeach
-            </ul>
-            {!! Form::open(['route' => 'search.redirect', 'method' => 'post', 'class'=> 'navbar-form navbar-right']) !!}
-            	{!! Form::text('keyword', null, ['class' => 'form-control', 'placeholder' => 'Поиск...']) !!}
-            {!! Form::close() !!}
-        </div><!--/.nav-collapse -->
+        <div class="search_items">
+
+        </div>
     </div>
-</nav>
+</header>
+
+
+

@@ -1,26 +1,42 @@
 @extends('layouts.layout')
 
-@section('header')
 
-    <div class="jumbotron">
-        <div class="container">
-            <h1>Hello, world</h1>
-            <p>Bla bla bal</p>
-        </div>
-    </div>
-@endsection
 
 @section('content')
-    <div class="row">
-    @foreach($posts as $post)
 
-            <div class="col-md-4">
-                <h2>{{$post['name']}}</h2>
-                <p>{{$post['desc']}}</p>
-                <p><a href="/posts/{{$post['url']}}" class="btn btn-default">Читать далее</a></p>
+            <div class="top">
+                @if(count($latest_posts)>0)
+                    @foreach($latest_posts as $lp)
+                        <a class="item @if ($loop->first)
+                                        item_big
+                                        @endif" style="background-image: url({{ url('files/images/'.$lp->image) }})" href="@if ($lp->category->parent)
+                        {{ url($lp->category->parent->url.'/'.$lp->url) }}
+                        @else
+                        {{ url($lp->category->url.'/'.$lp->url) }}
+                        @endif">
+                            <div class="bot">
+                                <span class="h2">{{ $lp->name }}</span>
+                            </div>
+                        </a>
+                    @endforeach
+                @endif
+
+
+            </div>
+            <div class="mid">
+                <div class="left">
+                    @if(count($posts)>0)
+                        @foreach ($posts as $post)
+                            @include('posts.postBlock')
+                        @endforeach
+                    @endif
+
+
+                </div>
+                <div class="right">
+                    @include('layouts.popular')
+                </div>
             </div>
 
-    @endforeach
-    </div>
 
 @endsection

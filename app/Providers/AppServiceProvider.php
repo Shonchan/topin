@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Category;
+use App\Post;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 
@@ -17,6 +18,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
         \View::share('cats', Category::tree());
+        \View::share('popular', Post::orderBy('browsed', 'desc')->limit(10)->get());
     }
 
     /**

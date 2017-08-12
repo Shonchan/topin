@@ -13,28 +13,7 @@
 
 
 
-Route::get('/', function () {
 
-    $posts = array([
-            "id" => 1,
-            "name" => "test1",
-            "url" => "test1",
-            "desc" => "asdasdasdas"
-        ],
-        [
-            "id" => 2,
-            "name" => "test2",
-            "url" => "test2",
-            "desc" => "werwerwefwefwef"
-        ]);
-
-
-
-    return view('index', array(
-        'name' => 'Alex',
-        'posts' => $posts,
-    ));
-});
 
 Auth::routes();
 
@@ -49,12 +28,25 @@ Route::namespace('Admin')->prefix('admin')->middleware('admin')->group(function 
     Route::resource('categories', 'CategoryController');
 });
 
-Route::get('search/{keyword}', 'Views\PostView@search')->name('search');
-Route::post('search/', 'Views\PostView@searchRedirect')->name('search.redirect');
+Route::middleware('construct')->group(function (){
+    Route::get('/', function () {
 
-Route::get( '/{url}', 'Views\PostView@index' )->name('category');
+        $latest_posts = \App\Post::latest()->limit(5)->get();
+        $posts = \App\Post::latest()->limit(15)->get();
 
-Route::get('/{cat_url}/{url}', 'Views\PostView@show')->name('post');
+
+        return view('index', compact('latest_posts', 'posts'));
+    });
+
+    Route::get('search/{keyword}', 'Views\PostView@search')->name('search');
+    Route::post('search/', 'Views\PostView@searchRedirect')->name('search.redirect');
+
+    Route::get( '/{url}', 'Views\PostView@index' )->name('category');
+
+    Route::get('/{cat_url}/{url}', 'Views\PostView@show')->name('post');
+});
+
+
 
 
 
