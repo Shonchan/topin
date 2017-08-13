@@ -6,8 +6,8 @@
  */
 
 require('./bootstrap');
-require('../../../node_modules/bs-simple-admin/assets/js/custom');
-require('../../../node_modules/summernote/summernote');
+require('../../vendors/bs-simple-admin/assets/js/custom');
+require('../../vendors/summernote/summernote');
 
 $(document).ready(function() {
     $('#summernote').summernote();
