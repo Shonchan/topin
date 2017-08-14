@@ -5,11 +5,12 @@
 @section('content')
 
             <div class="top">
-                @if(count($latest_posts)>0)
+                @if(isset($latest_posts) && count($latest_posts)>0)
                     @foreach($latest_posts as $lp)
                         <a class="item @if ($loop->first)
                                         item_big
-                                        @endif" style="background-image: url({{ url('files/images/'.$lp->image) }})" href="@if ($lp->category->parent)
+                                        @endif"
+                           @if($lp->image)style="background-image: url({{ url('files/images/'.$lp->image) }})"@endif href="@if ($lp->category->parent)
                         {{ url($lp->category->parent->url.'/'.$lp->url) }}
                         @else
                         {{ url($lp->category->url.'/'.$lp->url) }}
@@ -25,7 +26,7 @@
             </div>
             <div class="mid">
                 <div class="left">
-                    @if(count($posts)>0)
+                    @if(isset($posts) && count($posts)>0)
                         @foreach ($posts as $post)
                             @include('posts.postBlock')
                         @endforeach

@@ -5,7 +5,9 @@
                 <div class="mobile_menu">
                     <a href="#" class="mobile_button"><span></span></a>
                     <ul>
-                        @if (count($cats)>0)
+
+                        
+                        @if (isset($cats) && count($cats)>0)
                             @foreach ($cats as $cat)
                                 <li><a href="{{ url($cat->url) }}">{{ $cat->name }}</a></li>
                                 @if (count($cat->childs) > 0)
@@ -16,11 +18,15 @@
                             @endforeach
                         @endif
 
+
                     </ul>
                 </div>
                 <a href=" {{ url('/') }}"><img src="{{ url('images/logo.png') }}" alt="" /></a>
                 <div class="menu">
-                    <ul>@if (count($cats)>0)
+
+                    <ul>
+
+                         @if (isset($cats) && count($cats)>0)
                             @foreach ($cats as $cat)
                                 <li><a href="{{ url($cat->url) }}">{{ $cat->name }}</a></li>
                                 @if (count($cat->childs) > 0)
@@ -30,6 +36,7 @@
                                 @endif
                             @endforeach
                         @endif
+
                     </ul>
                 </div>
             </div>

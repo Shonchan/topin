@@ -156,13 +156,13 @@ header .mobile_menu ul {
     top: 54px;
     left: -100%;
     background: rgba(255, 255, 255, 0.95);
-    padding: 10px 20px;
+    padding: 10px 0;
     transition:all 0.2s ease;
     height: calc(100vh - 54px);
     overflow-y: auto;
 }
 
-header .mobile_menu ul li {}
+header .mobile_menu ul li {padding: 0 20px;}
 
 header .mobile_menu ul li a {line-height: 34px;text-transform:uppercase;}
 
@@ -195,7 +195,7 @@ header .login a{line-height:34px;font-size:20px;color:#dedede;}
     padding: 54px 20px 10px;
     max-width: 1160px;
     background: #fff;
-    min-height: calc(100vh - 124px);
+    min-height: calc(100vh - 114px);
 }
 
 .main .top {
@@ -392,10 +392,10 @@ header .mobile_menu.active ul {
     }
     header .mobile_menu {
         display: block;
-        margin:0 20px 0 0;
+        margin:0 10px 0 0;
     }
     header input{width:calc(100% - 60px);}
-    header .search{width:100%;background:#f7f8f9;}
+    header .search{width:100%;margin:0 0 0 10px;background:#f7f8f9;}
     header .search_items {
         width: 100%;
         left: 0;
@@ -466,7 +466,7 @@ header .mobile_menu.active ul {
 .blog .blog_top .item {
     width: calc(40% - 1px);
     min-height: 180px;
-    background: url(/images/top_item_small.jpg) no-repeat center;
+    background: url(../img/top_item_small.jpg) no-repeat center;
     background-size: cover;
     margin-bottom: 3px;
     position: relative;
@@ -474,7 +474,7 @@ header .mobile_menu.active ul {
 
 .blog .blog_top .item_big {
     width: calc(60% - 2px);
-    background: url(/images/top_item_big.jpg) no-repeat center;
+    background: url(../img/top_item_big.jpg) no-repeat center;
     min-height: 383px;
     margin-right: 3px;
 }
@@ -541,3 +541,5 @@ header .mobile_menu.active ul {
 .single_blog .blog_item_text h3, .single_blog .blog_item_text h4{font-size:20px;margin-bottom:15px;}
 .single_blog .blog_item_text p a{font-size:16px;text-decoration:underline;}
 .single_blog .blog_item_text p a:hover{text-decoration:none;}
+.single_blog .blog_item_text ul li{font-size:16px;margin:0 0 15px 16px;list-style-type:disc;}
+.single_blog .blog_item_text ol li{font-size:16px;margin:0 0 15px 16px;list-style-type:decimal;}

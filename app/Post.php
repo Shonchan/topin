@@ -31,9 +31,14 @@ class Post extends Model
     public function next()
     {
 
-        $query = $this->where('published', '=', 1)->orderBy('id', 'asc')->limit(2);
+        $query = $this->where('published', '=', 1)
+            ->where('category_id','=', $this->category_id)
+            ->where('id','!=', $this->id)
+            ->orderBy('id', 'asc')->limit(2);
         $next = $this->where('id', '>', $this->id)
             ->where('published', '=', 1)
+            ->where('category_id','=', $this->category_id)
+            ->where('id','!=', $this->id)
             ->orderBy('id', 'asc')
             ->limit(2)
             ->union($query)->limit(2)->get();
@@ -42,21 +47,38 @@ class Post extends Model
 
     public function prev()
     {
-        $query = $this->where('published', '=', 1)->orderBy('id', 'desc')->limit(2);
+        $query = $this->where('published', '=', 1)
+            ->where('category_id','=', $this->category_id)
+            ->where('id','!=', $this->id)->orderBy('id', 'desc')->limit(2);
         $prev = $this->where('id', '<', $this->id)
             ->where('published', '=', 1)
+            ->where('category_id','=', $this->category_id)
+            ->where('id','!=', $this->id)
             ->orderBy('id', 'desc')
             ->limit(2)
             ->union($query)->limit(2)->get();
+
         return $prev;
     }
 
     public function roundLinks()
     {
+
         $prev = $this->prev();
         $next = $this->next();
 
-        return view('layouts.roundLinks', compact('prev', 'next'));
+        $links = array();
+        foreach ($prev as $item){
+            if(!array_key_exists($item->id, $links))
+                $links[$item->id] = $item;
+        }
+        foreach ($next as $item){
+            if(!array_key_exists($item->id, $links))
+                $links[$item->id] = $item;
+        }
+
+
+        return view('layouts.roundLinks', compact('links'));
     }
 
 }

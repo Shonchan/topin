@@ -1,7 +1,7 @@
 <div class="item">
     <div class="image">
         <a href="@if ($post->category->parent){{ url($post->category->parent->url.'/'.$post->url) }}@else{{ url($post->category->url.'/'.$post->url) }}@endif">
-            <img data-original="{{ url('files/images/'.$post->image) }}" src="{{ url('files/images/'.$post->image) }}" alt="{{ $post->name }}" />
+            <img @if ($post->image)data-original="{{ url('files/images/'.$post->image) }}" src="{{ url('files/images/'.$post->image) }}"@endif alt="{{ $post->name }}" />
         </a>
     </div>
     <div class="cont">

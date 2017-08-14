@@ -1,7 +1,8 @@
 <div class="popular">
+    @if (isset($popular) && count($popular) > 0)
     <div class="h2"><span class="icon-fire">Самое интересное</span></div>
 
-    @if (count($popular) > 0)
+
         @foreach ($popular as $pp)
             <div class="item">
                 <a href="@if ($pp->category->parent)

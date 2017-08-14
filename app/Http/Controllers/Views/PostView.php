@@ -15,7 +15,10 @@ class PostView extends Controller
         if (isset($cat)) {
             $posts = Post::latest()->where('category_id', '=', $cat->id)
                 ->where('published', '=', 1)->paginate(10);
-            return view( 'posts.category', compact( 'cat', 'posts' ) );
+            $popular = Post::where('published', '=', 1)
+                ->where('category_id', '=', $cat->id)
+                ->orderBy('browsed', 'desc')->limit(10)->get();
+            return view( 'posts.category', compact( 'cat', 'posts', 'popular' ) );
         }
         else return redirect('/');
     }
@@ -37,12 +40,15 @@ class PostView extends Controller
             $post->save();
         }
 
+
         \Cookie::queue('browsed_posts', $browsed_posts, 60*24*30);
 
 
+        $popular = Post::where('published', '=', 1)
+            ->where('category_id', '=', $post->category_id)
+            ->orderBy('browsed', 'desc')->limit(10)->get();
 
-
-        return view('posts.show', compact('post'));
+        return view('posts.show', compact('post', 'popular'));
     }
 
     public function search($keyword){

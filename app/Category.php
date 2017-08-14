@@ -18,6 +18,7 @@ class Category extends Model
 
     public static function  tree(){
         $cats = Category::all();
+        
         $categories = array();
         foreach ($cats as $k=>$cat) {
             if($cat->parent_id == 0) {
