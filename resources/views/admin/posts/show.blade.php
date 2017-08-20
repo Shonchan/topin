@@ -73,7 +73,7 @@
                 {!! Form::label('url', 'Адрес', ['class' => 'control-label']) !!}
             </div>
             <div class="col-md-7">
-                {!! Form::text('url', $post->url, ['class' => 'form-control']) !!}
+                {!! Form::text('url', $post->url, ['class' => 'form-control', 'data-url' => $post->url]) !!}
                 @if ($errors->has('url'))
                     <span class="help-block">
                                             <strong>{{ $errors->first('url') }}</strong>
@@ -163,6 +163,14 @@
             </div>
         </div>
     </div>
+    
+    @if ($post->image)
+        <div class="form-group">
+
+                <img src="{{ $post->imageSize(640,320) }}" alt="">
+
+        </div>
+    @endif
 
     <div class="form-group">
         <div class="row">
@@ -177,6 +185,7 @@
             </div>
         </div>
     </div>
+    <script !src="">var resource='post';</script>
 
     {!! Form::close() !!}
 @stop

@@ -81,4 +81,21 @@ class Post extends Model
         return view('layouts.roundLinks', compact('links'));
     }
 
+    public function imageSize($width=1200, $height=600){
+        $path = public_path().'/files/images/';
+        if($width == 1200 && $height == 600) {
+            return url('files/images/'.$this->image);
+        }
+
+        $resizePath = public_path().'/files/resize/';
+        $parts = explode('.', $this->image);
+        $filename = $parts[0].$width.'x'.$height.'.'.$parts[1];
+        if (file_exists($resizePath.$filename))
+            return url ('files/resize/'.$filename);
+
+        $image = \Image::make($path.$this->image)->resize($width, $height);
+        $image->save($resizePath.$filename);
+        return url('files/resize/'.$image->basename);
+    }
+
 }

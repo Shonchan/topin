@@ -146,4 +146,16 @@ class CategoryController extends Controller
 
         return redirect()->route('categories.index');
     }
+
+    public function  checkUrl($url){
+        $cat = Category::where('url', '=', $url)->first();
+        if($cat === null) {
+            return response()->json([
+                'free' => true,
+            ]);
+        }
+        return response()->json([
+            'free' => false,
+        ]);
+    }
 }

@@ -23,7 +23,7 @@
                 {!! Form::label('name', 'Наименование', ['class' => 'control-label']) !!}
             </div>
             <div class="col-md-7">
-                {!! Form::text('name', $cat->name, ['class' => 'form-control']) !!}
+                {!! Form::text('name', $cat->name, ['class' => 'form-control', 'data-name'=>$cat->name]) !!}
                 @if ($errors->has('name'))
                     <span class="help-block">
                                         <strong>{{ $errors->first('name') }}</strong>
@@ -40,7 +40,7 @@
                 {!! Form::label('url', 'Url', ['class' => 'control-label']) !!}
             </div>
             <div class="col-md-7">
-                {!! Form::text('url', $cat->url, ['class' => 'form-control']) !!}
+                {!! Form::text('url', $cat->url, ['class' => 'form-control', 'data-url'=>$cat->url]) !!}
                 @if ($errors->has('url'))
                     <span class="help-block">
                                         <strong>{{ $errors->first('url') }}</strong>
@@ -118,6 +118,8 @@
             </div>
         </div>
     </div>
+
+    <script !src="">var resource='category';</script>
 
     {!! Form::close() !!}
 

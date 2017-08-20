@@ -6,6 +6,7 @@ use App\Category;
 use App\Post;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Intervention\Image\Image;
 
 class PostView extends Controller
 {
@@ -41,7 +42,7 @@ class PostView extends Controller
         }
 
 
-        \Cookie::queue('browsed_posts', $browsed_posts, 60*24*30);
+        \Cookie::queue('browsed_posts', $browsed_posts, 60*24);
 
 
         $popular = Post::where('published', '=', 1)
@@ -52,6 +53,7 @@ class PostView extends Controller
     }
 
     public function search($keyword){
+
         $posts = Post::where('name', 'LIKE', '%'.$keyword.'%')
                 ->orWhere('annotation', 'LIKE', '%'.$keyword.'%')
                 ->where('published', '=', 1)->paginate(10);

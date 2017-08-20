@@ -9,7 +9,7 @@
 
 
 
-      {!! Form::open(['route' => 'posts.store', 'method' => 'post', 'files' => true]) !!}
+      {!! Form::open(['route' => 'posts.store', 'method' => 'post', 'files' => true, 'id'=>'app']) !!}
           <div class="form-group {{ $errors->has('name') ? ' has-error' : '' }}">
               <div class="row">
                     <div class="col-md-2">
@@ -144,5 +144,7 @@
           </div>
           
       {!! Form::close() !!}
+
+      <script !src="">var resource='post';</script>
 
 @stop

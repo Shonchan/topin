@@ -11,6 +11,6 @@
         {{ url($post->category->url.'/'.$post->url) }}
         @endif">{{ $post->name }}</a>
         <p>{{ $post->annotation }}</p>
-        <p><span class="icon-clock">{{ $post->created_at }}</span> <span class="icon-eye-1"> {{ $post->browsed }}</span> <span class="icon-comment">11</span></p>
+        <p><span class="icon-clock">{{ $post->created_at }}</span> <span class="icon-eye-1"> {{ $post->browsed }}</span> {{--<span class="icon-comment">11</span>--}}</p>
     </div>
 </div>

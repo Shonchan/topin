@@ -10,7 +10,7 @@
                 @else
                 {{ url($pp->category->url.'/'.$pp->url) }}
                 @endif">{{ $pp->name }}</a>
-                <p>3 подписчика <span></span> 2 ответа</p>
+                <p>{{ $pp->browsed }} {{ trans_choice('просмотр|просмотра|просмотров', $pp->browsed) }} {{--<span></span> 2 ответа--}}</p>
             </div>
         @endforeach
     @endif

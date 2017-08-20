@@ -115,7 +115,9 @@
             </div>
         </div>
     </div>
+
+    <script !src="">var resource='category';</script>
           
-      {!! Form::close() !!}
+    {!! Form::close() !!}
 
 @stop

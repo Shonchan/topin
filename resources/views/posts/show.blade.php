@@ -12,9 +12,9 @@
                 <div class="about_blog">
                     <p>{{ $post->getAuthor->name }}</p>
                    <p> @if ($post->category->parent){{ $post->category->parent->name }} <span class="dot"></span>@endif <a href="{{ url('/'.$post->category->url) }}">{{ $post->category->name }}</a></p>
-                    <p><i class="icon-eye-1"></i>{{ $post->browsed }} <i class="icon-comment"></i>11</p>
+                    <p><i class="icon-eye-1"></i>{{ $post->browsed }}{{-- <i class="icon-comment"></i>11--}}</p>
                 </div>
-                <a href="#" class="blog_image"><img @if($post->image)src="{{ url('files/images/'.$post->image) }}"@endif alt="{{ $post->name }}" /></a>
+                <a href="#" class="blog_image"><img @if($post->image)src="{{ $post->imageSize(640,320) }}"@endif alt="{{ $post->name }}" /></a>
             </div>
             <div class="blog_item_text">
                 {!! $post->body !!}

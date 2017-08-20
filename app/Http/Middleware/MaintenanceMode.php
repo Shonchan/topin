@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Category;
 use Closure;
 
 
@@ -22,6 +23,8 @@ class MaintenanceMode
     {
 
         if(\Auth::check() && $request->user()->role == 'admin'){
+
+            \View::share('cats', Category::tree());
             return $next( $request );
         }
 

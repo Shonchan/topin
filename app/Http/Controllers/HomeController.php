@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Post;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +24,22 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+
+        $posts = [];
+        $latest_posts = [];
+        $main_posts = Post::where('published', '=', 1)->latest()->limit(15)->get();
+        for ($i=0; $i < count($main_posts); $i++) {
+            if (isset($main_posts[$i])) {
+                if ($i > 4)
+                    $posts[] = $main_posts[$i];
+                else
+                    $latest_posts[] = $main_posts[$i];
+            }
+        }
+
+        $popular = Post::where('published', '=', 1)->orderBy('browsed', 'desc')->limit(10)->get();
+
+
+        return view('index', compact('latest_posts', 'posts', 'popular'));
     }
 }

@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Category;
 use App\Post;
-use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Image;
 
 class PostController extends Controller
 {
@@ -86,11 +86,12 @@ class PostController extends Controller
         if ($request->hasFile('image')){
             $file = $request->file('image');
             $destinationPath =  public_path().'/files/images/';
-            $filename = str_random(20) .'.' . $file->getClientOriginalExtension() ?: 'png';
+            $filename = str_random(20) .'.' . $file->getClientOriginalExtension() ?: 'jpg';
             $post->image = $filename;
-            if ($request->hasFile('image')) {
-                $request->file('image')->move($destinationPath, $filename);
-            }
+
+
+           Image::make($file->getRealPath())->resize(1200, 600)->save($destinationPath.$filename);
+
         }
 
         $post->save();
@@ -170,11 +171,9 @@ class PostController extends Controller
         if ($request->hasFile('image')){
             $file = $request->file('image');
             $destinationPath =  public_path().'/files/images/';
-            $filename = str_random(20) .'.' . $file->getClientOriginalExtension() ?: 'png';
+            $filename = str_random(20) .'.' . $file->getClientOriginalExtension() ?: 'jpg';
             $post->image = $filename;
-            if ($request->hasFile('image')) {
-                $request->file('image')->move($destinationPath, $filename);
-            }
+            Image::make($file->getRealPath())->resize(1200, 600)->save($destinationPath.$filename);
         }
 
         $post->save();
@@ -192,11 +191,23 @@ class PostController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        $post = User::findOrFail($id);
+        $post = Post::findOrFail($id);
         $post->delete();
 
         $request->session()->flash('success', 'Статья '.$post->name.' удалена!');
 
         return redirect()->route('posts.index');
+    }
+
+    public function  checkUrl($url){
+        $post = Post::where('url', '=', $url)->first();
+        if($post === null) {
+            return response()->json([
+                'free' => true,
+            ]);
+        }
+        return response()->json([
+            'free' => false,
+        ]);
     }
 }
